@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Daily Well-being Tip</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      padding: 1rem;
+      background: #e8f5e9;
+      border-left: 5px solid #66bb6a;
+      border-radius: 5px;
+    }
+    h3 {
+      margin-top: 0;
+    }
+    blockquote {
+      font-style: italic;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h3>🧠 Your Daily Well-being Tip</h3>
+  <blockquote id="dailyTip">Loading tip...</blockquote>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const themes = {
+        "Mental Health": [
+          "Take 5 minutes to check in with how you're feeling today.",
+          "Talk to a colleague or friend about something positive.",
+          "Stay hydrated, eat nutritious meals through the day.",
+          "Keep your workspace clean and comfortable.",
+          "Practice deep breathing during stressful moments.",
+          "Communicate openly with your manager about workload and stress.",
+          "Reach out to a colleague or manager if you're feeling overwhelmed – this is a strength not a weakness.",
+          "Organise tasks with to-do lists or digital planners.",
+          "Step away from your desk every 60-90 minutes to reset the mind and body for a few moments.",
+          "Replace 'I have to' with 'I get to' to shift your mindset and reduce stress.",
+          "Personalise your work area with calming items like plants, photos, or soft lighting.",
+          "Write down one thing you're grateful for today.",
+          "Every 20 minutes, look at something 20 feet away for 20 seconds to prevent eye strain and fatigue."
+        ],
+        "Physical Activity": [
+          "Stretch for 2 minutes between meetings.",
+          "Take a brisk 10-minute walk during your break.",
+          "Take regular short breaks to rest your mind and body.",
+          "Use the stairs instead of the lift as much as possible.",
+          "Park further from the office to include a small walk.",
+          "Do 10 standing calf raises while the kettle is boiling.",
+          "Try a walking meeting instead of sitting at your desk.",
+          "Brush your teeth in the morning balanced on one leg to improve stability.",
+          "Get off public transport 1 or 2 stops earlier.",
+          "Walk around while on calls to increase step count.",
+          "Do simple desk exercises like shoulder rolls or leg lifts."
+        ],
+        "Nutrition": [
+          "Drink a glass of water before your next coffee.",
+          "Don't skip breakfast, fuel your morning with a healthy one.",
+          "Plan and pack balanced lunches to avoid unhealthy takeout.",
+          "Limit sugary drinks and opt for water, tea, or infused water.",
+          "Stay hydrated, drink plenty of water through the day.",
+          "Add a piece of fruit to your lunch today.",
+          "Swap one processed snack for a whole food alternative.",
+          "Avoid desk eating, give meals your full attention.",
+          "Make your food plate colourful, more colour often means more nutrient varieties.",
+          "Limit processed and high-sodium foods during work hours.",
+          "Try a 'Hydration challenge' - drink a glass of water every 2 hours.",
+          "Avoid skipping meals – fuel your body regularly."
+        ],
+        "Mindfulness": [
+          "Take 3 deep breaths before starting your next task.",
+          "Pause and notice 3 things you can hear right now.",
+          "Be fully present in meetings—listen actively and avoid multitasking.",
+          "Eat lunch mindfully—away from your desk and without distractions.",
+          "Sit outside when you can, soak in the sounds of nature.",
+          "Write down 1 thing you're looking forward to today.",
+          "Listen to calming music while working on repetitive tasks.",
+          "Respond to stress with calm awareness rather than reactivity.",
+          "Take mindful walks during breaks, focusing on your surroundings.",
+          "Spend 1 minute focusing only on your breathing."
+        ],
+        "Work-Life Balance": [
+          "Log off on time today and do something you enjoy.",
+          "Take a proper lunch break away from your screen.",
+          "Practice saying no to avoid overcommitting.",
+          "Turn off work notifications outside of working hours.",
+          "Make time for hobbies, family, and self-care daily.",
+          "Schedule personal time just like work meetings.",
+          "Avoid checking emails during your personal time.",
+          "Reflect on one thing you did well today before logging off.",
+          "Review your week, celebrate small wins.",
+          "Communicate openly with your manager about workload.",
+          "Incorporate short breaks throughout your workday.",
+          "Take regular vacations and time off to reset.",
+          "Prioritise tasks and delegate when possible.",
+          "Set one small boundary to protect your personal time."
+        ]
+      };
+
+      function generateTip() {
+        const themeKeys = Object.keys(themes);
+        const theme = themeKeys[Math.floor(Math.random() * themeKeys.length)];
+        const tips = themes[theme];
+        const tip = tips[Math.floor(Math.random() * tips.length)];
+        return `${tip} <br><small style="color:#555;">Theme: ${theme}</small>`;
+      }
+
+      const today = new Date().toISOString().split('T')[0];
+      const stored = JSON.parse(localStorage.getItem('dailyWellbeingTip') || '{}');
+
+      const tipElement = document.getElementById('dailyTip');
+      if (!tipElement) return;
+
+      if (stored.date !== today) {
+        const newTip = generateTip();
+        localStorage.setItem('dailyWellbeingTip', JSON.stringify({ date: today, tip: newTip }));
+        tipElement.innerHTML = newTip;
+      } else {
+        tipElement.innerHTML = stored.tip;
+      }
+    });
+  </script>
+</body>
+</html>
